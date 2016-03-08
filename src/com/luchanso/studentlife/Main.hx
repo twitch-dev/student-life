@@ -1,7 +1,10 @@
 package com.luchanso.studentlife;
 
+import com.luchanso.studentlife.game.Game;
+import com.luchanso.studentlife.menu.Menu;
 import openfl.display.Sprite;
 import openfl.Lib;
+import openfl.events.Event;
 
 /**
  * ...
@@ -9,13 +12,17 @@ import openfl.Lib;
  */
 class Main extends Sprite 
 {
+	var game : Game;
+	var menu : Menu;
 
 	public function new() 
 	{
 		super();
 		
-		// Assets:
-		// openfl.Assets.getBitmapData("img/assetname.jpg");
+		game = new Game();
+		menu = new Menu();
+		
+		addChild(game);
+		addChild(menu);
 	}
-
 }
