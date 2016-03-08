@@ -7,7 +7,7 @@ import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
 
 /**
- * ...
+ * https://github.com/Luchanso/student-life
  * @author Loutchansky Oleg
  */
 class Game extends Sprite

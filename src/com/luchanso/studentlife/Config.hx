@@ -2,7 +2,7 @@ package com.luchanso.studentlife;
 import openfl.text.TextFormat;
 
 /**
- * ...
+ * https://github.com/Luchanso/student-life
  * @author Loutchansky Oleg
  */
 class Config
