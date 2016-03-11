@@ -4,6 +4,7 @@ import com.luchanso.studentlife.Config;
 import com.luchanso.studentlife.game.actor.Student;
 import com.luchanso.studentlife.game.effects.PlusOne;
 import com.luchanso.studentlife.game.ui.Button;
+import com.luchanso.studentlife.game.ui.statsview.StatsView;
 import flash.events.Event;
 import haxe.Serializer;
 import haxe.Unserializer;
@@ -37,16 +38,19 @@ class Game extends Sprite
 	var bRestaurant : Button;
 	var student : Student;
 
+	var statsView : StatsView;
+
 	public function new()
 	{
 		super();
-		
+
 		loadUserData();
-		
+
 		consoleInit();
 
 		addHelloWorld();
 		addButtons();
+		addStatsView();
 	}
 
 	private function consoleInit() : Void
@@ -82,6 +86,8 @@ class Game extends Sprite
 			saveUserData();
 			iterationCount = 0;
 		}
+
+		statsView.lMoney.money = student.money;
 	}
 
 	private function saveUserData() : Void
@@ -157,6 +163,15 @@ class Game extends Sprite
 
 			i++;
 		}
+	}
+
+	private function addStatsView() : Void
+	{
+		statsView = new StatsView();
+
+		studentUpdateData(null);
+
+		addChild(statsView);
 	}
 
 	private function makeEffectPlusOne(x : Float, y : Float, text : String) {
