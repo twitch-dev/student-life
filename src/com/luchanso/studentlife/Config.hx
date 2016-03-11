@@ -8,4 +8,6 @@ import openfl.text.TextFormat;
 class Config
 {
 	public static var font : String = "Aria";
+	public static var colorMainUi : Int = 0x00E676;
+	public static var colorHoverMainUi : Int = 0x69F0AE;
 }
