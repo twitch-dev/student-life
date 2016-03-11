@@ -1,6 +1,7 @@
 package com.luchanso.studentlife;
 
 import com.luchanso.studentlife.game.Game;
+import com.luchanso.studentlife.game.ui.MCPS;
 import com.luchanso.studentlife.menu.Menu;
 import openfl.display.FPS;
 import openfl.display.Sprite;
@@ -16,12 +17,14 @@ class Main extends Sprite
 	var game : Game;
 	var menu : Menu;
 	var fps : FPS;
+	var mcps : MCPS;
 
 	public function new() 
 	{
 		super();
 		
 		fps = new FPS(10, 10, 0xFFFFFF);
+		mcps = new MCPS(10, 25, 0xFFFFFF);
 		
 		game = new Game();
 		menu = new Menu();
@@ -30,5 +33,6 @@ class Main extends Sprite
 		addChild(game);
 		addChild(menu);
 		addChild(fps);
+		addChild(mcps);
 	}
 }
