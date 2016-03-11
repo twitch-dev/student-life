@@ -138,13 +138,13 @@ class Game extends Sprite
 		bPurse = new Button(new Bitmap(Assets.getBitmapData("img/purse.png")), Config.colorMainUi, Config.colorHoverMainUi);
 		bPurse.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.money++;
-			makeEffectPlusOne(e.stageX, e.stageY, "+1 деньгам");
+			makeEffectPlusOne(e.stageX, e.stageY, "+1 к деньгам");
 		});
 
 		bRestaurant = new Button(new Bitmap(Assets.getBitmapData("img/restaurant.png")), Config.colorMainUi, Config.colorHoverMainUi);
 		bRestaurant.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.fed++;
-			makeEffectPlusOne(e.stageX, e.stageY, "+1 сытности");
+			makeEffectPlusOne(e.stageX, e.stageY, "+1 к сытности");
 		});
 
 		arrayButtons.push(bSchool);
