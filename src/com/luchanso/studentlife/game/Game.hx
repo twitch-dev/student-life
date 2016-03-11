@@ -1,17 +1,20 @@
 package com.luchanso.studentlife.game;
 
 import com.luchanso.studentlife.Config;
+import com.luchanso.studentlife.game.actor.Student;
 import com.luchanso.studentlife.game.ui.Button;
 import motion.Actuate;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
+import openfl.events.MouseEvent;
 import openfl.geom.ColorTransform;
 import openfl.net.SharedObject;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
+import pgr.dconsole.DC;
 
 /**
  * https://github.com/Luchanso/student-life
@@ -21,10 +24,12 @@ class Game extends Sprite
 {
 	var tHelloWorld : TextField;
 
+	// remove to button manager class
 	var bSchool : Button;
 	var bHeadset : Button;
 	var bPurse : Button;
 	var bRestaurant : Button;
+	var student : Student;
 
 	public function new()
 	{
@@ -33,12 +38,24 @@ class Game extends Sprite
 		loadUserData();
 		saveUserData();
 		
+		consoleInit();
+
 		addHelloWorld();
 		addButtons();
 	}
 
+	private function consoleInit() : Void
+	{
+		DC.registerObject(student, "student");
+		DC.monitorField(student, "fed", "fed");
+		DC.monitorField(student, "money", "money");
+		DC.monitorField(student, "happy", "happy");
+		DC.monitorField(student, "education", "education");
+	}
+
 	private function loadUserData() : Void
 	{
+		student = new Student();
 	}
 
 	private function saveUserData() : Void
@@ -69,9 +86,24 @@ class Game extends Sprite
 		var arrayButtons = new Array<Button>();
 
 		bSchool = new Button(new Bitmap(Assets.getBitmapData("img/school.png")), Config.colorMainUi, Config.colorHoverMainUi);
+		bSchool.addEventListener(MouseEvent.CLICK, function(_) {
+			student.education++;
+		});
+
 		bHeadset = new Button(new Bitmap(Assets.getBitmapData("img/headset.png")), Config.colorMainUi, Config.colorHoverMainUi);
+		bHeadset.addEventListener(MouseEvent.CLICK, function(_) {
+			student.happy++;
+		});
+
 		bPurse = new Button(new Bitmap(Assets.getBitmapData("img/purse.png")), Config.colorMainUi, Config.colorHoverMainUi);
+		bPurse.addEventListener(MouseEvent.CLICK, function(_) {
+			student.money++;
+		});
+
 		bRestaurant = new Button(new Bitmap(Assets.getBitmapData("img/restaurant.png")), Config.colorMainUi, Config.colorHoverMainUi);
+		bRestaurant.addEventListener(MouseEvent.CLICK, function(_) {
+			student.fed++;
+		});
 
 		arrayButtons.push(bSchool);
 		arrayButtons.push(bHeadset);
