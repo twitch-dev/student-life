@@ -7,6 +7,7 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.Lib;
 import openfl.events.Event;
+import pgr.dconsole.DC;
 
 /**
  * https://github.com/Luchanso/student-life
@@ -19,17 +20,19 @@ class Main extends Sprite
 	var fps : FPS;
 	var mcps : MCPS;
 
-	public function new() 
+	public function new()
 	{
 		super();
-		
+
+		DC.init();
+
 		fps = new FPS(10, 10, 0xFFFFFF);
 		mcps = new MCPS(10, 25, 0xFFFFFF);
-		
+
 		game = new Game();
 		menu = new Menu();
 		menu.visible = false;
-		
+
 		addChild(game);
 		addChild(menu);
 		addChild(fps);
