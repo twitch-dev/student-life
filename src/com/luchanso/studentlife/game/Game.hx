@@ -2,6 +2,7 @@ package com.luchanso.studentlife.game;
 
 import com.luchanso.studentlife.Config;
 import com.luchanso.studentlife.game.actor.Student;
+import com.luchanso.studentlife.game.effects.PlusOne;
 import com.luchanso.studentlife.game.ui.Button;
 import flash.events.Event;
 import haxe.Serializer;
@@ -74,11 +75,12 @@ class Game extends Sprite
 		student.addEventListener(Student.UPDATE_DATA, studentUpdateData);
 	}
 
-	private function studentUpdateData(e:Event):Void
+	private function studentUpdateData(e : Event) : Void
 	{
 		iterationCount++;
 		if (iterationCount > 50) {
 			saveUserData();
+			iterationCount = 0;
 		}
 	}
 
@@ -95,7 +97,7 @@ class Game extends Sprite
 	private function addHelloWorld() : Void
 	{
 		tHelloWorld = new TextField();
-		tHelloWorld.defaultTextFormat = new TextFormat("Arial", 50, 0xFFFFFF);
+		tHelloWorld.defaultTextFormat = new TextFormat(Config.font, 50, 0xFFFFFF);
 		tHelloWorld.text = "Hello twitch";
 		tHelloWorld.selectable = false;
 		tHelloWorld.autoSize = TextFieldAutoSize.LEFT;
@@ -105,7 +107,7 @@ class Game extends Sprite
 		addChild(tHelloWorld);
 	}
 
-	private function addButtons()
+	private function addButtons() : Void
 	{
 		var buttonSize = 72;
 		var margin = 100;
@@ -116,23 +118,27 @@ class Game extends Sprite
 		var arrayButtons = new Array<Button>();
 
 		bSchool = new Button(new Bitmap(Assets.getBitmapData("img/school.png")), Config.colorMainUi, Config.colorHoverMainUi);
-		bSchool.addEventListener(MouseEvent.CLICK, function(_) {
+		bSchool.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.education++;
+			makeEffectPlusOne(e.stageX, e.stageY, "+1 к знаниям");
 		});
 
 		bHeadset = new Button(new Bitmap(Assets.getBitmapData("img/headset.png")), Config.colorMainUi, Config.colorHoverMainUi);
-		bHeadset.addEventListener(MouseEvent.CLICK, function(_) {
+		bHeadset.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.happy++;
+			makeEffectPlusOne(e.stageX, e.stageY, "+1 к счастью");
 		});
 
 		bPurse = new Button(new Bitmap(Assets.getBitmapData("img/purse.png")), Config.colorMainUi, Config.colorHoverMainUi);
-		bPurse.addEventListener(MouseEvent.CLICK, function(_) {
+		bPurse.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.money++;
+			makeEffectPlusOne(e.stageX, e.stageY, "+1 деньгам");
 		});
 
 		bRestaurant = new Button(new Bitmap(Assets.getBitmapData("img/restaurant.png")), Config.colorMainUi, Config.colorHoverMainUi);
-		bRestaurant.addEventListener(MouseEvent.CLICK, function(_) {
+		bRestaurant.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.fed++;
+			makeEffectPlusOne(e.stageX, e.stageY, "+1 сытности");
 		});
 
 		arrayButtons.push(bSchool);
@@ -151,5 +157,9 @@ class Game extends Sprite
 
 			i++;
 		}
+	}
+
+	private function makeEffectPlusOne(x : Float, y : Float, text : String) {
+		addChild(PlusOne.generate(x + (-10 + Math.random() * 20), y + (-10 + Math.random() * 20), Config.colorEffect, text));
 	}
 }
