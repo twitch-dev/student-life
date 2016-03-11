@@ -1,10 +1,12 @@
 package com.luchanso.studentlife.game.actor;
+import openfl.events.Event;
+import openfl.events.EventDispatcher;
 
 /**
  * https://github.com/Luchanso/student-life
  * @author Loutchansky Oleg
  */
-class Student
+class Student extends EventDispatcher
 {
 	private var _fed : Float;
 	private var _money : Float;
@@ -16,8 +18,12 @@ class Student
 	public var happy(get, set) : Float;
 	public var education(get, set) : Float;
 
+	public static var UPDATE_DATA = "updateData";
+
 	public function new()
-	{		
+	{
+		super();
+
 		fed = 0;
 		money = 0;
 		happy = 0;
@@ -31,7 +37,9 @@ class Student
 
 	function set_education(value:Float):Float
 	{
-		return _education = value;
+		_education = value;
+		this.dispatchEvent(new Event(UPDATE_DATA));
+		return _education;
 	}
 
 	function get_happy():Float
@@ -41,7 +49,9 @@ class Student
 
 	function set_happy(value:Float):Float
 	{
-		return _happy = value;
+		_happy = value;
+		this.dispatchEvent(new Event(UPDATE_DATA));
+		return _happy;
 	}
 
 	function get_money():Float
@@ -51,7 +61,9 @@ class Student
 
 	function set_money(value:Float):Float
 	{
-		return _money = value;
+		_money = value;
+		this.dispatchEvent(new Event(UPDATE_DATA));
+		return _money;
 	}
 
 	function get_fed():Float
@@ -61,6 +73,8 @@ class Student
 
 	function set_fed(value:Float):Float
 	{
-		return _fed = value;
+		_fed = value;
+		this.dispatchEvent(new Event(UPDATE_DATA));
+		return _fed;
 	}
 }
