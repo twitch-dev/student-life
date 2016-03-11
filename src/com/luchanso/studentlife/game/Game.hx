@@ -3,6 +3,9 @@ package com.luchanso.studentlife.game;
 import com.luchanso.studentlife.Config;
 import com.luchanso.studentlife.game.actor.Student;
 import com.luchanso.studentlife.game.ui.Button;
+import flash.events.Event;
+import haxe.Serializer;
+import haxe.Unserializer;
 import motion.Actuate;
 import openfl.Assets;
 import openfl.Lib;
@@ -24,6 +27,8 @@ class Game extends Sprite
 {
 	var tHelloWorld : TextField;
 
+	var iterationCount : Int;
+
 	// remove to button manager class
 	var bSchool : Button;
 	var bHeadset : Button;
@@ -36,7 +41,6 @@ class Game extends Sprite
 		super();
 		
 		loadUserData();
-		saveUserData();
 		
 		consoleInit();
 
@@ -55,11 +59,37 @@ class Game extends Sprite
 
 	private function loadUserData() : Void
 	{
-		student = new Student();
+		var soStudent = SharedObject.getLocal("student").data;
+
+		if (soStudent.data == null)
+		{
+			student = new Student();
+		}
+		else
+		{
+			var unserializer = new Unserializer(soStudent.data);
+			student = unserializer.unserialize();
+		}
+
+		student.addEventListener(Student.UPDATE_DATA, studentUpdateData);
+	}
+
+	private function studentUpdateData(e:Event):Void
+	{
+		iterationCount++;
+		if (iterationCount > 50) {
+			saveUserData();
+		}
 	}
 
 	private function saveUserData() : Void
 	{
+		var storage = SharedObject.getLocal("student");
+
+		var serializer = new Serializer();
+		serializer.serialize(student);
+
+		storage.setProperty("data", serializer.toString());
 	}
 
 	private function addHelloWorld() : Void
