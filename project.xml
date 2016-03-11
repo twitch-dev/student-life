@@ -8,7 +8,7 @@
 	<!-- output -->
 	<app main="com.luchanso.studentlife.Main" file="student-life" path="bin" />
 	
-	<window background="##00B7EB" fps="60" />
+	<window background="#536DFE" fps="60" />
 	<window width="1000" height="800" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
