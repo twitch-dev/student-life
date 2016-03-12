@@ -1,5 +1,6 @@
 package com.luchanso.studentlife.game.ui.statsview;
 
+import motion.Actuate;
 import openfl.Lib;
 import openfl.display.Sprite;
 import openfl.events.Event;
@@ -40,13 +41,13 @@ class StatsView extends Sprite
 	private function addProgressBars(x : Float, y : Float) : Void
 	{
 		progressHappy = new ProgressBar(x, y, "Счастье");
-		progressHappy.progress = 0.5;
+		Actuate.tween(progressHappy, 3, { progress: Math.random() } );
 
 		progressFed = new ProgressBar(x, y + paddingTop, "Сытность");
-		progressFed.progress = 0.5;
+		Actuate.tween(progressFed, 3, { progress: Math.random() } );
 
 		progressEducation = new ProgressBar(x, y + paddingTop * 2, "Учёба");
-		progressEducation.progress = 0.5;
+		Actuate.tween(progressEducation, 3, { progress: Math.random() } );
 
 		addChild(progressHappy);
 		addChild(progressFed);
