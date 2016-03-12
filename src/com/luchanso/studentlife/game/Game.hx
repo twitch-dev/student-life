@@ -76,6 +76,8 @@ class Game extends Sprite
 			student = unserializer.unserialize();
 		}
 
+		DC.registerObject(student, "student");
+
 		student.addEventListener(Student.UPDATE_DATA, studentUpdateData);
 	}
 
