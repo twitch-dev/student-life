@@ -2,6 +2,8 @@ package com.luchanso.studentlife.game.ui.statsview;
 
 import openfl.Lib;
 import openfl.display.Sprite;
+import openfl.events.Event;
+import pgr.dconsole.DC;
 
 /**
  * ...
@@ -9,17 +11,45 @@ import openfl.display.Sprite;
  */
 class StatsView extends Sprite
 {
+	private static var margin = 25;
+	private static var paddingTop = 35;
+
 	public var lMoney : Money;
+
+	public var progressHappy : ProgressBar;
+	public var progressFed : ProgressBar;
+	public var progressEducation : ProgressBar;
 
 	public function new()
 	{
 		super();
 
-		var margin = 25;
+		var tempX = Lib.application.window.width - margin;
+		var tempY = margin;
 
-		lMoney = new Money(Lib.application.window.width - margin, margin, Config.colorMainUi);
+		addMoneyLable(tempX, tempY);
+		addProgressBars(tempX, tempY + paddingTop);
+	}
 
+	private function addMoneyLable(x : Float, y : Float) : Void
+	{
+		lMoney = new Money(x, y, Config.colorMainUi);
 		addChild(lMoney);
 	}
 
+	private function addProgressBars(x : Float, y : Float) : Void
+	{
+		progressHappy = new ProgressBar(x, y, "Счастье");
+		progressHappy.progress = 0.5;
+
+		progressFed = new ProgressBar(x, y + paddingTop, "Сытность");
+		progressFed.progress = 0.5;
+
+		progressEducation = new ProgressBar(x, y + paddingTop * 2, "Учёба");
+		progressEducation.progress = 0.5;
+
+		addChild(progressHappy);
+		addChild(progressFed);
+		addChild(progressEducation);
+	}
 }
