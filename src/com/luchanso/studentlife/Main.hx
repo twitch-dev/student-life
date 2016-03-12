@@ -2,7 +2,9 @@ package com.luchanso.studentlife;
 
 import com.luchanso.studentlife.game.Game;
 import com.luchanso.studentlife.game.ui.MCPS;
+import com.luchanso.studentlife.game.ui.statsview.ProgressBarLabel;
 import com.luchanso.studentlife.menu.Menu;
+import motion.Actuate;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.Lib;
@@ -25,6 +27,7 @@ class Main extends Sprite
 		super();
 
 		DC.init();
+		DC.registerClass(Actuate, "Actuate");
 
 		fps = new FPS(10, 10, 0xFFFFFF);
 		mcps = new MCPS(10, 25, 0xFFFFFF);
