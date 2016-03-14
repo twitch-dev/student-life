@@ -4,6 +4,8 @@ import motion.Actuate;
 import openfl.Lib;
 import openfl.display.Sprite;
 import openfl.events.Event;
+import openfl.events.KeyboardEvent;
+import openfl.ui.Keyboard;
 import pgr.dconsole.DC;
 
 /**
@@ -19,7 +21,6 @@ class StatsView extends Sprite
 
 	public var progressHappy : ProgressBar;
 	public var progressFed : ProgressBar;
-	public var progressEducation : ProgressBar;
 
 	public function new()
 	{
@@ -28,8 +29,19 @@ class StatsView extends Sprite
 		var tempX = Lib.application.window.width - margin;
 		var tempY = margin;
 
+		Lib.current.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+
 		addMoneyLable(tempX, tempY);
 		addProgressBars(tempX, tempY + paddingTop);
+	}
+
+	private function keyDown(e:KeyboardEvent):Void
+	{
+		if (e.keyCode == Keyboard.SPACE)
+		{
+			Actuate.tween(progressHappy, 3, { progress: Math.random() } );
+			Actuate.tween(progressFed, 3, { progress: Math.random() } );
+		}
 	}
 
 	private function addMoneyLable(x : Float, y : Float) : Void
@@ -46,11 +58,7 @@ class StatsView extends Sprite
 		progressFed = new ProgressBar(x, y + paddingTop, "Сытность");
 		Actuate.tween(progressFed, 3, { progress: Math.random() } );
 
-		progressEducation = new ProgressBar(x, y + paddingTop * 2, "Учёба");
-		Actuate.tween(progressEducation, 3, { progress: Math.random() } );
-
 		addChild(progressHappy);
 		addChild(progressFed);
-		addChild(progressEducation);
 	}
 }
