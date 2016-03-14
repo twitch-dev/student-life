@@ -1,5 +1,6 @@
-package com.luchanso.studentlife.game.ui;
+package com.luchanso.studentlife.game.ui.progresseducation;
 
+import com.luchanso.studentlife.game.ui.progresseducation.ProgressEducationTarget;
 import flash.display.Sprite;
 import motion.Actuate;
 import openfl.events.TimerEvent;
@@ -16,6 +17,7 @@ class ProgressEducation extends Sprite
 
 	private var progressWidth : Float;
 	private var target : ProgressEducationTarget;
+	private var lable : ProgressEducationLable;
 
 	private static var countRanges : Int = 100;
 	private static var minimalRanges : Int = 10;
@@ -33,17 +35,19 @@ class ProgressEducation extends Sprite
 
 		draw();
 		addTarget();
-
-		DC.registerFunction(setProgress, "setProgress");
-
-		var t = new Timer(1000);
-		t.addEventListener(TimerEvent.TIMER, prok);
-		t.start();
+		addLable();
 	}
 
-	private function prok(e:TimerEvent):Void
+	private function addLable() : Void
 	{
-		setProgress(Math.random());
+		lable = new ProgressEducationLable(this.progressWidth, 0);
+		lable.bindX(this.progressWidth);
+		addChild(lable);
+	}
+
+	public function setEducationScore(score : Float)
+	{
+		this.lable.setValue(score);
 	}
 
 	public function setProgress(progress : Float)
@@ -98,7 +102,9 @@ class ProgressEducation extends Sprite
 				graphics.lineStyle(progressHeight, Config.colorMainUi);
 				graphics.moveTo(i * padding, 0);
 				graphics.lineTo(i * padding, -rangeHeight);
-			} else {
+			}
+			else
+			{
 				graphics.lineStyle(rangeMinimalLineWidth, Config.colorMainUi);
 				graphics.moveTo(i * padding, 0);
 				graphics.lineTo(i * padding, -rangeMinimalHeight);

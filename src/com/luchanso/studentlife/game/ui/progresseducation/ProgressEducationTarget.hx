@@ -1,4 +1,4 @@
-package com.luchanso.studentlife.game.ui;
+package com.luchanso.studentlife.game.ui.progresseducation;
 
 import motion.Actuate;
 import motion.easing.Linear;
