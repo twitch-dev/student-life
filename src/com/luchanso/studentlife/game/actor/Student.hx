@@ -13,6 +13,13 @@ class Student extends EventDispatcher
 	private var _happy : Float;
 	private var _education : Float;
 
+	private var _maxFed : Float;
+	private var _maxHappy : Float;
+
+	public var maxEducation(get, null) : Float;
+	public var maxFed(get, set) : Float;
+	public var maxHappy(get, set) : Float;
+
 	public var fed(get, set) : Float;
 	public var money(get, set) : Float;
 	public var happy(get, set) : Float;
@@ -28,6 +35,9 @@ class Student extends EventDispatcher
 		money = 0;
 		happy = 0;
 		education = 0;
+
+		maxFed = 1;
+		maxHappy = 1;
 	}
 
 	function get_education():Float
@@ -50,6 +60,16 @@ class Student extends EventDispatcher
 	function set_happy(value:Float):Float
 	{
 		_happy = value;
+
+		if (_happy < 0)
+		{
+			_happy = 0;
+		}
+		else if (_happy > _maxHappy)
+		{
+			_happy = _maxHappy;
+		}
+
 		this.dispatchEvent(new Event(UPDATE_DATA));
 		return _happy;
 	}
@@ -74,7 +94,41 @@ class Student extends EventDispatcher
 	function set_fed(value:Float):Float
 	{
 		_fed = value;
+		if (_fed < 0)
+		{
+			_fed = 0;
+		}
+		else if (_fed > _maxFed)
+		{
+			_fed = _maxFed;
+		}
+
 		this.dispatchEvent(new Event(UPDATE_DATA));
 		return _fed;
+	}
+
+	function get_maxEducation():Float
+	{
+		return Config.maxEducationScore;
+	}
+
+	function get_maxFed():Float
+	{
+		return _maxFed;
+	}
+
+	function set_maxFed(value:Float):Float
+	{
+		return _maxFed = value;
+	}
+
+	function get_maxHappy():Float
+	{
+		return _maxHappy;
+	}
+
+	function set_maxHappy(value:Float):Float
+	{
+		return _maxHappy = value;
 	}
 }
