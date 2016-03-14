@@ -4,6 +4,7 @@ import com.luchanso.studentlife.Config;
 import com.luchanso.studentlife.game.actor.Student;
 import com.luchanso.studentlife.game.effects.PlusOne;
 import com.luchanso.studentlife.game.ui.Button;
+import com.luchanso.studentlife.game.ui.ProgressEducation;
 import com.luchanso.studentlife.game.ui.statsview.StatsView;
 import flash.events.Event;
 import haxe.Serializer;
@@ -39,6 +40,7 @@ class Game extends Sprite
 	var student : Student;
 
 	var statsView : StatsView;
+	var progressEducation : ProgressEducation;
 
 	public function new()
 	{
@@ -51,6 +53,19 @@ class Game extends Sprite
 		addHelloWorld();
 		addButtons();
 		addStatsView();
+		addProgressEducation();
+	}
+
+	private function addProgressEducation() : Void
+	{
+		var margin = 25;
+		var x = margin;
+		var y = Config.height / 2 - ProgressEducation.progressHeight / 2;
+		var pWidth = Config.width - margin * 2;
+
+		progressEducation = new ProgressEducation(x, y, pWidth);
+
+		addChild(progressEducation);
 	}
 
 	private function consoleInit() : Void
