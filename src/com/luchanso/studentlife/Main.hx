@@ -28,6 +28,7 @@ class Main extends Sprite
 
 		DC.init();
 		DC.registerClass(Actuate, "Actuate");
+		DC.registerClass(Tools, "Tools");
 
 		fps = new FPS(10, 10, 0xFFFFFF);
 		mcps = new MCPS(10, 25, 0xFFFFFF);
