@@ -4,7 +4,7 @@ import com.luchanso.studentlife.Config;
 import com.luchanso.studentlife.game.actor.Student;
 import com.luchanso.studentlife.game.effects.PlusOne;
 import com.luchanso.studentlife.game.ui.Button;
-import com.luchanso.studentlife.game.ui.ProgressEducation;
+import com.luchanso.studentlife.game.ui.progresseducation.ProgressEducation;
 import com.luchanso.studentlife.game.ui.statsview.StatsView;
 import flash.events.Event;
 import haxe.Serializer;
@@ -15,11 +15,13 @@ import openfl.Lib;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
 import openfl.events.MouseEvent;
+import openfl.events.TimerEvent;
 import openfl.geom.ColorTransform;
 import openfl.net.SharedObject;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
+import openfl.utils.Timer;
 import pgr.dconsole.DC;
 
 /**
@@ -31,8 +33,8 @@ class Game extends Sprite
 	var tHelloWorld : TextField;
 
 	var iterationCount : Int;
+	var gameTimer : Timer;
 
-	// remove to button manager class
 	var bSchool : Button;
 	var bHeadset : Button;
 	var bPurse : Button;
@@ -54,6 +56,27 @@ class Game extends Sprite
 		addButtons();
 		addStatsView();
 		addProgressEducation();
+
+		addTimerEvent();
+
+		studentUpdateData();
+	}
+
+	private function addTimerEvent() : Void
+	{
+		var timerDelay = 1000;
+
+		gameTimer = new Timer(timerDelay);
+		gameTimer.addEventListener(TimerEvent.TIMER, update);
+		gameTimer.start();
+	}
+
+	private function update(e:TimerEvent) : Void
+	{
+		student.maxFed = 50 + student.education / student.maxEducation * 100000;
+		student.maxHappy = 10 + student.education / student.maxEducation * 10000 * Math.exp(1);
+		student.happy -= 0.5;
+		student.fed -= 0.5;
 	}
 
 	private function addProgressEducation() : Void
@@ -96,7 +119,7 @@ class Game extends Sprite
 		student.addEventListener(Student.UPDATE_DATA, studentUpdateData);
 	}
 
-	private function studentUpdateData(e : Event) : Void
+	private function studentUpdateData(e : Event = null) : Void
 	{
 		iterationCount++;
 		if (iterationCount > 50) {
@@ -105,6 +128,11 @@ class Game extends Sprite
 		}
 
 		statsView.lMoney.money = student.money;
+		progressEducation.setEducationScore(student.education);
+		progressEducation.setProgress(student.education / student.maxEducation);
+
+		statsView.progressFed.setProgress(student.fed / student.maxFed);
+		statsView.progressHappy.setProgress(student.happy / student.maxHappy);
 	}
 
 	private function saveUserData() : Void
@@ -185,8 +213,6 @@ class Game extends Sprite
 	private function addStatsView() : Void
 	{
 		statsView = new StatsView();
-
-		studentUpdateData(null);
 
 		addChild(statsView);
 	}
