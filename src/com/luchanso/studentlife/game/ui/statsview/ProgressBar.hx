@@ -1,5 +1,6 @@
 package com.luchanso.studentlife.game.ui.statsview;
 
+import motion.Actuate;
 import openfl.Lib;
 import openfl.display.Sprite;
 import openfl.events.Event;
@@ -27,6 +28,11 @@ class ProgressBar extends Sprite
 		addLable(text);
 
 		progress = 0.0;
+	}
+
+	public function setProgress(value : Float)
+	{
+		Actuate.tween(this, 0.5, { progress: value } );
 	}
 
 	function addLable(text)
