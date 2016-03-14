@@ -13,4 +13,6 @@ class Config
 	public static var colorEffect : Int = 0xEEFF41;
 	public static var width : Float = 1000;
 	public static var height : Float = 800;
+
+	public static var maxEducationScore : Float = 400000;
 }
