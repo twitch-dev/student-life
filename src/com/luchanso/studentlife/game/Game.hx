@@ -2,6 +2,7 @@ package com.luchanso.studentlife.game;
 
 import com.luchanso.studentlife.Config;
 import com.luchanso.studentlife.game.actor.Student;
+import com.luchanso.studentlife.game.effects.Coin;
 import com.luchanso.studentlife.game.effects.PlusOne;
 import com.luchanso.studentlife.game.ui.Button;
 import com.luchanso.studentlife.game.ui.progresseducation.ProgressEducation;
@@ -172,24 +173,28 @@ class Game extends Sprite
 		bSchool.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.education++;
 			makeEffectPlusOne(e.stageX, e.stageY, "+1 к знаниям");
+			makeEffectEducation(bSchool.x, bSchool.y);
 		});
 
 		bHeadset = new Button(new Bitmap(Assets.getBitmapData("img/headset.png")), Config.colorMainUi, Config.colorHoverMainUi);
 		bHeadset.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.happy++;
 			makeEffectPlusOne(e.stageX, e.stageY, "+1 к счастью");
+			makeEffectHappy(bHeadset.x, bHeadset.y);
 		});
 
 		bPurse = new Button(new Bitmap(Assets.getBitmapData("img/purse.png")), Config.colorMainUi, Config.colorHoverMainUi);
 		bPurse.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.money++;
 			makeEffectPlusOne(e.stageX, e.stageY, "+1 к деньгам");
+			makeEffectMoney(bPurse.x, bPurse.y);
 		});
 
 		bRestaurant = new Button(new Bitmap(Assets.getBitmapData("img/restaurant.png")), Config.colorMainUi, Config.colorHoverMainUi);
 		bRestaurant.addEventListener(MouseEvent.CLICK, function(e:MouseEvent) {
 			student.fed++;
 			makeEffectPlusOne(e.stageX, e.stageY, "+1 к сытности");
+			makeEffectFood(bRestaurant.x, bRestaurant.y);
 		});
 
 		arrayButtons.push(bSchool);
@@ -219,5 +224,25 @@ class Game extends Sprite
 
 	private function makeEffectPlusOne(x : Float, y : Float, text : String) {
 		addChild(PlusOne.generate(x + (-10 + Math.random() * 20), y + (-10 + Math.random() * 20), Config.colorEffect, text));
+	}
+
+	private function makeEffectEducation(x : Float, y : Float) : Void
+	{
+		addChild(Coin.generate(x, y, progressEducation.x + progressEducation.width * Math.random(), progressEducation.y - progressEducation.height / 2, Coin.EDUCATION));
+	}
+
+	private function makeEffectMoney(x : Float, y : Float) : Void
+	{
+		addChild(Coin.generate(x, y, statsView.lMoney.x + statsView.lMoney.width * Math.random(),  statsView.lMoney.y -  statsView.lMoney.height / 2, Coin.MONEY));
+	}
+
+	private function makeEffectHappy(x : Float, y : Float) : Void
+	{
+		addChild(Coin.generate(x, y, statsView.progressHappy.x - statsView.progressHappy.width * Math.random(), statsView.progressHappy.y - statsView.progressHappy.height / 2, Coin.HAPPY));
+	}
+
+	private function makeEffectFood(x : Float, y : Float) : Void
+	{
+		addChild(Coin.generate(x, y, statsView.progressFed.x - statsView.progressFed.width * Math.random(), statsView.progressFed.y - statsView.progressFed.height / 2, Coin.FOOD));
 	}
 }
